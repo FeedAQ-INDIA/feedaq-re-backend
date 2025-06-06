@@ -63,7 +63,7 @@ const saveUserFav = async (
 
     if (!userData) throw new Error("User not found"); // Handle case where user is not found
 
-    await db.UserFav.findOrCreate({
+    const [res, created] = await db.UserFav.findOrCreate({
         where:{
             propertyId,
             userId,
@@ -76,7 +76,7 @@ const saveUserFav = async (
         }
     })
 
-    return {message: 'User Fav saved successfully'};
+    return {message: 'User Fav saved successfully', data: res};
 };
 
 

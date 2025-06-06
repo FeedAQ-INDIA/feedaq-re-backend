@@ -98,6 +98,10 @@ db.Property.belongsTo(db.Location, {
     foreignKey: 'locationId',
     as: 'locatedIn',
 });
+db.Property.hasOne(db.UserFav, {
+    foreignKey: 'propertyId',
+    as: 'fav',
+});
 
 
 

@@ -2,6 +2,7 @@
 const { Op } = require('sequelize'); // Import Sequelize operators
 const db = require("../entity/index.js");
 
+
 // --- Helper Functions for Query Building ---
 
 /**
@@ -347,6 +348,19 @@ exports.searchProperties = async (req, res) => {
         as: 'images',
         required: false,
     });
+
+    if(req.user){
+        includeClause.push({
+            model: db.UserFav,
+            as: 'fav',
+            where:{
+                userId: req?.user?.userId
+            },
+            required: false,
+        });
+    }
+
+
 
     console.log('-----------------------------------------------------------------------------------------------------------')
     console.log(JSON.stringify({

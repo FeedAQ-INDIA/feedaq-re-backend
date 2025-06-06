@@ -122,8 +122,7 @@ async function saveUserFav(req, res, next) {
 
 async function deleteUserFav(req, res, next) {
     const {
-        userId,
-        favId
+         favId
     } = req.body;
     try {
         let val = await AcademyService.deleteUserFav(req.user.userId,

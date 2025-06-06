@@ -4,6 +4,7 @@ const genericController = require("../controller/Generic.controller.js");
 const searchController = require("../controller/Search.controller.js");
  const authMiddleware = require("../middleware/authMiddleware");
  const logger = require('../config/winston.config.js')
+const userIdExtracter = require("../middleware/userIdExtracter");
 
 router.get("/ping", function (req, res) {
     res.status(200).send({message: "Ping Successful"});
@@ -20,7 +21,7 @@ router.post("/saveUserSearchTrack", authMiddleware, genericController.saveUserSe
 router.post("/saveUserFav", authMiddleware, genericController.saveUserFav);
 router.post("/deleteUserFav", authMiddleware, genericController.deleteUserFav);
 
-router.get("/search",   searchController.searchProperties);
+router.get("/search", userIdExtracter,   searchController.searchProperties);
 
 
 
