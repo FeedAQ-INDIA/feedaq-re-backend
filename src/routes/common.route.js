@@ -16,7 +16,7 @@ router.post("/search-v2", genericController.searchRecord);
 
 router.post("/saveUserDetail", authMiddleware, genericController.saveUserDetail);
 
-router.get("/search", searchController.searchProperties);
+router.get("/search", authMiddleware,   searchController.searchProperties);
 
 
 

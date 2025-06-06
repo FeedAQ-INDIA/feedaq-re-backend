@@ -440,4 +440,6 @@ async function seedDatabase() {
 }
 
 // Execute the seeding function
-seedDatabase();
+module.exports={
+    seedDatabase
+}

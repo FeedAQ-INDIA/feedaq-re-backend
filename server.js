@@ -18,6 +18,7 @@ const swaggerUi = require("swagger-ui-express");
 require("./google_oauth.js");
 require("./microsoft_oauth.js");
 const logger = require('./src/config/winston.config.js')
+const {seedDatabase} = require("./src/controller/DummyInsert");
 
 
 const swaggerOptions = {
@@ -50,7 +51,7 @@ app.use(bodyParser.json());
 
 // db.Webinar.sync({ alter: true });
 
-// db.sequelize.sync({alter:true}).then(() => {
+// db.sequelize.sync({force:true}).then(() => {
 //     console.log("Drop and re-sync db.");
 // });
 
@@ -70,3 +71,6 @@ app.use(authRoute);
 app.listen(port, '0.0.0.0', () => {
     console.log(`Example app listening on port ${port}`);
 });
+
+
+// seedDatabase();

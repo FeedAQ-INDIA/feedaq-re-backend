@@ -1,37 +1,41 @@
 // models/developer.js
 module.exports = (sequelize, DataTypes) => {
-  const Developer = sequelize.define('Developer', {
+  const Developer = sequelize.define('developer', {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      allowNull: false,
+      field: "developer_id",
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      field: "developer_name",
     },
     website: {
       type: DataTypes.STRING,
       validate: {
         isUrl: true,
       },
+      field: "developer_website",
     },
     email: {
       type: DataTypes.STRING,
       validate: {
         isEmail: true,
       },
+      field: "developer_email",
     },
     contactNumber: {
       type: DataTypes.STRING,
+      field: "developer_contact_no",
     },
     description: {
       type: DataTypes.TEXT,
+      field: "developer_description",
     },
   }, {
-    tableName: 'developers',
+    tableName: 'developer',
     timestamps: true,
   });
 

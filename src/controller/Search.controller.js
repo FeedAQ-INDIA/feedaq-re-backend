@@ -192,7 +192,7 @@ exports.searchProperties = async (req, res) => {
         const distanceInMeters = parsedRadiusKm * 1000;
 
         // Add geospatial condition to locationWhere. Use Op.and if other location filters exist.
-        const geospatialCondition = db.sequelize.literal(`ST_DWithin("locatedIn".geom, ${searchPoint}, ${distanceInMeters}, true)`);
+        const geospatialCondition = db.sequelize.literal(`ST_DWithin("locatedIn".location_geoam, ${searchPoint}, ${distanceInMeters}, true)`);
 
         if (Object.keys(locationWhere).length > 0) {
             locationWhere = { [Op.and]: [locationWhere, geospatialCondition] };
@@ -244,6 +244,11 @@ exports.searchProperties = async (req, res) => {
                 required: true // INNER JOIN
             }];
         }
+        projectInclude.include.push({
+            model: db.PropertyImage,
+            as: 'images',
+            required: false
+        })
         includeClause.push(projectInclude);
     } else {
         // LEFT JOIN
@@ -255,7 +260,12 @@ exports.searchProperties = async (req, res) => {
                 model: db.Developer,
                 as: 'developer',
                 required: false
-            }]
+            },
+                {
+                    model: db.PropertyImage,
+                    as: 'images',
+                    required: false
+                }]
         });
     }
 
