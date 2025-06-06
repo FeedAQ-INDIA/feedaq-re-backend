@@ -42,6 +42,8 @@ async function searchRecord(req, res, next) {
     }
 }
 
+
+
 async function saveUserDetail(req, res, next) {
     const {
         firstName ,
@@ -68,10 +70,83 @@ async function saveUserDetail(req, res, next) {
 
 
 
+async function saveUserSearchTrack(req, res, next) {
+    const {
+         propertyId ,
+        projectId ,
+        developerId ,
+        isContacted
+    } = req.body;
+    try {
+        let val = await AcademyService.saveUserSearchTrack(req.user.userId,
+            propertyId ,
+            projectId ,
+            developerId ,
+            isContacted);
+        res.status(200).send({
+            status: 200, message: "Success", data: val != null ? val : [],
+        });
+    } catch (err) {
+        console.error(`Error occured`, err.message);
+        res.status(500).send({
+            status: 500, message: err.message || "Some error occurred while creating the Tutorial.",
+        });
+        next(err);
+    }
+}
+
+
+async function saveUserFav(req, res, next) {
+    const {
+        propertyId ,
+        projectId ,
+        developerId ,
+    } = req.body;
+    try {
+        let val = await AcademyService.saveUserFav(req.user.userId,
+            propertyId ,
+            projectId ,
+            developerId);
+        res.status(200).send({
+            status: 200, message: "Success", data: val != null ? val : [],
+        });
+    } catch (err) {
+        console.error(`Error occured`, err.message);
+        res.status(500).send({
+            status: 500, message: err.message || "Some error occurred while creating the Tutorial.",
+        });
+        next(err);
+    }
+}
+
+
+async function deleteUserFav(req, res, next) {
+    const {
+        userId,
+        favId
+    } = req.body;
+    try {
+        let val = await AcademyService.deleteUserFav(req.user.userId,
+            favId);
+        res.status(200).send({
+            status: 200, message: "Success", data: val != null ? val : [],
+        });
+    } catch (err) {
+        console.error(`Error occured`, err.message);
+        res.status(500).send({
+            status: 500, message: err.message || "Some error occurred while creating the Tutorial.",
+        });
+        next(err);
+    }
+}
+
+
+
 module.exports = {
      getUser,
     searchRecord,
-
+    deleteUserFav,
+    saveUserFav,
     saveUserDetail,
-
+    saveUserSearchTrack
 };

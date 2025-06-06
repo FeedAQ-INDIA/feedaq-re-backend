@@ -15,8 +15,12 @@ router.get("/ping", function (req, res) {
 router.post("/search-v2", genericController.searchRecord);
 
 router.post("/saveUserDetail", authMiddleware, genericController.saveUserDetail);
+router.post("/saveUserSearchTrack", authMiddleware, genericController.saveUserSearchTrack);
 
-router.get("/search", authMiddleware,   searchController.searchProperties);
+router.post("/saveUserFav", authMiddleware, genericController.saveUserFav);
+router.post("/deleteUserFav", authMiddleware, genericController.deleteUserFav);
+
+router.get("/search",   searchController.searchProperties);
 
 
 

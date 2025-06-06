@@ -23,14 +23,49 @@ db.sequelize = sequelize;
 
 // Entities
 db.User = require("./User.entity.js")(sequelize, Sequelize);
-
-// Import all models
 db.Property = require('./Property.entity.js')(sequelize, Sequelize);
 db.PropertyFeature = require('./PropertyFeature.entity.js')(sequelize, Sequelize);
 db.PropertyImage = require('./PropertyImage.entity.js')(sequelize, Sequelize);
 db.Project = require('./Project.entity.js')(sequelize, Sequelize);
 db.Developer = require('./Developer.entity.js')(sequelize, Sequelize);
 db.Location = require('./Location.entity.js')(sequelize, Sequelize); // For standardizing locations
+db.UserSearchTrack = require('./UserSearchTrack.entity.js')(sequelize, Sequelize);
+db.UserFav = require('./UserFav.entity.js')(sequelize, Sequelize);
+
+db.UserFav.belongsTo(db.User, {
+    foreignKey: 'userId',
+    as: 'user',
+});
+db.UserFav.belongsTo(db.Property, {
+    foreignKey: 'propertyId',
+    as: 'property',
+});
+db.UserFav.belongsTo(db.Project, {
+    foreignKey: 'projectId',
+    as: 'project',
+});
+db.UserFav.belongsTo(db.Developer, {
+    foreignKey: 'developerId',
+    as: 'developer',
+});
+
+
+db.UserSearchTrack.belongsTo(db.User, {
+    foreignKey: 'userId',
+    as: 'user',
+});
+db.UserSearchTrack.belongsTo(db.Property, {
+    foreignKey: 'propertyId',
+    as: 'property',
+});
+db.UserSearchTrack.belongsTo(db.Project, {
+    foreignKey: 'projectId',
+    as: 'project',
+});
+db.UserSearchTrack.belongsTo(db.Developer, {
+    foreignKey: 'developerId',
+    as: 'developer',
+});
 
 
 db.User.hasMany(db.Property, {

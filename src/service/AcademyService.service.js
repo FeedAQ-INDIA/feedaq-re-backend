@@ -7,7 +7,6 @@ const crypto = require('crypto');
 const {toJSON} = require("lodash/seq");
 
 
-
 const saveUserDetail = async (
     userId,
     firstName,
@@ -29,7 +28,74 @@ const saveUserDetail = async (
 };
 
 
+const saveUserSearchTrack = async (
+    userId,
+    propertyId,
+    projectId,
+    developerId,
+    isContacted
+) => {
+    const userData = await db.User.findByPk(userId);
 
+    if (!userData) throw new Error("User not found"); // Handle case where user is not found
+
+    await db.UserSearchTrack.create({
+        propertyId,
+        projectId,
+        userId,
+        developerId,
+        isContacted
+    })
+
+    return {message: 'User Search Track saved successfully'};
+};
+
+
+
+
+const saveUserFav = async (
+    userId,
+    propertyId,
+    projectId,
+    developerId,
+ ) => {
+    const userData = await db.User.findByPk(userId);
+
+    if (!userData) throw new Error("User not found"); // Handle case where user is not found
+
+    await db.UserFav.findOrCreate({
+        where:{
+            propertyId,
+            userId,
+         },
+        defaults:{
+            propertyId,
+            projectId,
+            userId,
+            developerId,
+        }
+    })
+
+    return {message: 'User Fav saved successfully'};
+};
+
+
+const deleteUserFav = async (
+    userId,
+    favId
+) => {
+    const userData = await db.User.findByPk(userId);
+
+    if (!userData) throw new Error("User not found"); // Handle case where user is not found
+
+    await db.UserFav.destroy({
+        where:{
+            id: favId,
+        }
+    })
+
+    return {message: 'User Fav deleted successfully'};
+};
 
 
 const getUser = async (userId) => {
@@ -169,8 +235,9 @@ const parseIncludes = (data) => {
 module.exports = {
     getUser,
     searchRecord,
-
+    deleteUserFav,
+    saveUserFav,
     saveUserDetail,
-
+    saveUserSearchTrack
 };
 
