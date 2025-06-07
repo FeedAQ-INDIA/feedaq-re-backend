@@ -44,6 +44,11 @@ module.exports = (sequelize, DataTypes) => {
             field: "usersearchtrack_is_contacted",
             defaultValue: false,
         },
+        count: {
+            type: DataTypes.INTEGER,
+            field: "usersearchtrack_count",
+            defaultValue: 0,
+        },
     }, {
         tableName: 'usersearchtrack',
         timestamps: true, // When the image was added

@@ -27,27 +27,53 @@ const saveUserDetail = async (
     return {message: 'User saved successfully'};
 };
 
-
 const saveUserSearchTrack = async (
     userId,
-    propertyId,
-    projectId,
-    developerId,
-    isContacted
+    propertyId = null,
+    projectId = null,
+    developerId = null,
+    isContacted = false
 ) => {
-    const userData = await db.User.findByPk(userId);
+    const t = await db.sequelize.transaction();
 
-    if (!userData) throw new Error("User not found"); // Handle case where user is not found
+    try {
+        const whereClause = {
+            userId,
+            ...(propertyId && {propertyId}), ...(developerId && {developerId}),
+            ...(projectId && {projectId}),
+        };
 
-    await db.UserSearchTrack.create({
-        propertyId,
-        projectId,
-        userId,
-        developerId,
-        isContacted
-    })
+        const existingTrack = await db.UserSearchTrack.findOne({
+            where: whereClause,
+            lock: t.LOCK.UPDATE, // Lock the row
+            transaction: t,
+        });
 
-    return {message: 'User Search Track saved successfully'};
+        if (existingTrack) {
+            existingTrack.count += 1;
+            existingTrack.createdAt = new Date();
+            existingTrack.isContacted = isContacted;
+            await existingTrack.save({ transaction: t });
+        } else {
+            await db.UserSearchTrack.create(
+                {
+                    userId,
+                    propertyId,
+                    projectId,
+                    developerId,
+                    isContacted,
+                    count: 1,
+                },
+                { transaction: t }
+            );
+        }
+
+        await t.commit();
+        return { message: existingTrack ? "Updated" : "Inserted" };
+    } catch (error) {
+        await t.rollback();
+        throw error;
+    }
 };
 
 
