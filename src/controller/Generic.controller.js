@@ -120,6 +120,58 @@ async function saveUserFav(req, res, next) {
 }
 
 
+
+
+async function registerAgent(req, res, next) {
+    const {
+        agentBio,
+        agentPhoneNumber,
+        agentEmail,
+        agentLicenseNumber,
+        agentExperience,
+        agentAgencyName,
+        agentWebsite,
+        agentOfficeAddress,
+        agentCity,
+        agentState,
+        agentCountry,
+        agentAreasServed,
+        agentSpecializations,
+        agentLanguagesSpoken,
+        latitude,
+        longitude
+    } = req.body;
+    try {
+        let val = await AcademyService.registerAgent(req.user.userId,
+            agentBio,
+            agentPhoneNumber,
+            agentEmail,
+            agentLicenseNumber,
+            agentExperience,
+            agentAgencyName,
+            agentWebsite,
+            agentOfficeAddress,
+            agentCity,
+            agentState,
+            agentCountry,
+            agentAreasServed,
+            agentSpecializations,
+            agentLanguagesSpoken,
+            latitude,
+            longitude);
+        res.status(200).send({
+            status: 200, message: "Success", data: val != null ? val : [],
+        });
+    } catch (err) {
+        console.error(`Error occured`, err.message);
+        res.status(500).send({
+            status: 500, message: err.message || "Some error occurred while creating the Tutorial.",
+        });
+        next(err);
+    }
+}
+
+
 async function deleteUserFav(req, res, next) {
     const {
          favId
@@ -142,10 +194,11 @@ async function deleteUserFav(req, res, next) {
 
 
 module.exports = {
-     getUser,
+    getUser,
     searchRecord,
     deleteUserFav,
     saveUserFav,
     saveUserDetail,
-    saveUserSearchTrack
+    saveUserSearchTrack,
+    registerAgent
 };

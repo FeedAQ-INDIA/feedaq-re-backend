@@ -124,6 +124,81 @@ const deleteUserFav = async (
 };
 
 
+
+const getInitials = (name) => {
+    const trimmedName = name.trim();
+
+    if (!trimmedName.includes(" ")) {
+        return trimmedName.slice(0, 2).toUpperCase();
+    }
+
+    const words = trimmedName.split(" ").filter(word => word.length > 0);
+    const initials = words.map(word => word.charAt(0).toUpperCase()).join("");
+
+    return initials.slice(0, 2);
+};
+
+const registerAgent = async (
+    userId,
+    agentBio,
+    agentPhoneNumber,
+    agentEmail,
+    agentLicenseNumber,
+    agentExperience,
+    agentAgencyName,
+    agentWebsite,
+    agentOfficeAddress,
+    agentCity,
+    agentState,
+    agentCountry,
+    agentAreasServed,
+    agentSpecializations,
+    agentLanguagesSpoken,
+    latitude,
+    longitude
+) => {
+
+
+    const [res, created] = await db.Agent.findOrCreate({
+        where:{
+            userId,
+        },
+        defaults:{
+            userId,
+            agentBio,
+            agentPhoneNumber,
+            agentEmail,
+            agentLicenseNumber,
+            agentExperience,
+            agentAgencyName,
+            agentWebsite,
+            agentOfficeAddress,
+            agentCity,
+            agentState,
+            agentCountry,
+            agentAreasServed,
+            agentSpecializations,
+            agentLanguagesSpoken,
+            latitude,
+            longitude,
+            agentNameInitial: getInitials(agentAgencyName)
+        }
+    })
+
+    if(created){
+        const userRes = await db.User.findByPk(userId);
+        if(userRes){
+            userRes.agentId = res.agentId;
+            userRes.isAgent = true;
+            await userRes.save();
+        }
+    }
+
+    return {message: 'Agent registered successfully', data: res};
+};
+
+
+
 const getUser = async (userId) => {
     const userData = await db.User.findByPk(userId);
 
@@ -131,6 +206,8 @@ const getUser = async (userId) => {
 
     return userData.toJSON();
 };
+
+
 
 
 const searchRecord = async (req, res) => {
@@ -264,6 +341,7 @@ module.exports = {
     deleteUserFav,
     saveUserFav,
     saveUserDetail,
-    saveUserSearchTrack
+    saveUserSearchTrack,
+    registerAgent
 };
 

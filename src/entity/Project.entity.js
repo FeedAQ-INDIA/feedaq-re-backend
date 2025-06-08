@@ -57,11 +57,46 @@ module.exports = (sequelize, DataTypes) => {
         key: "developer_id",
       },
     },
+    latitude: { // Keep for easier input/output
+      type: DataTypes.DECIMAL(10, 8),
+      field: "project_latitude",
+    },
+    longitude: { // Keep for easier input/output
+      type: DataTypes.DECIMAL(11, 8),
+      field: "project_longitude",
+    },
+    // NEW: Geographic point column
+    geom: {
+      type: DataTypes.GEOMETRY('Point', 4326), // 'Point' type, SRID 4326 (WGS84 - standard lat/lon)
+      allowNull: true, // Allow null if not all locations have precise coordinates
+      field: "project_geoam",
+    },
     // developerId will be added by association
   }, {
     tableName: 'project',
     timestamps: true,
+    indexes: [
+      {
+        fields: ['project_geoam'],
+        using: 'GIST', // GIST index for geospatial queries
+      }
+    ]
   });
+
+  // Hook to automatically populate 'geom' from latitude/longitude
+  Project.beforeSave(async (location, options) => {
+    if (location.latitude && location.longitude) {
+      location.geom = {
+        type: 'Point',
+        coordinates: [parseFloat(location.longitude), parseFloat(location.latitude)], // GeoJSON expects [longitude, latitude]
+        crs: { type: 'name', properties: { name: 'EPSG:4326' } }
+      };
+    } else {
+      location.geom = null; // Clear geom if coordinates are removed
+    }
+  });
+
+
 
   return Project;
 };

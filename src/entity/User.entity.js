@@ -31,6 +31,20 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(200),
         field: "user_profile_pic",
       },
+      isAgent:{
+        type: Sequelize.BOOLEAN,
+        field: "user_is_agent",
+        defaultValue: false,
+      },
+      // agentId: {
+      //   type: Sequelize.INTEGER,
+      //   field: "user_agent_id",
+      //   references: {
+      //     model: "agent",
+      //     key: "agent_id",
+      //   },
+      // },
+
       derivedUserName: {
         type: Sequelize.VIRTUAL,
         get() {

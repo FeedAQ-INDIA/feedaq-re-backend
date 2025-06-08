@@ -237,6 +237,7 @@ router.post("/auth/refresh-token", (req, res) => {
 });
 
 router.get("/auth/logout", (req, res) => {
+  const redirect = req.query.redirectUri || `${frontendUrl}`;
   res.clearCookie("accessToken", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -247,7 +248,7 @@ router.get("/auth/logout", (req, res) => {
     secure: process.env.NODE_ENV === "production",
     sameSite: "None",
   });
-  res.redirect(`${frontendUrl}/signin`);
+  res.redirect(redirect);
 });
 
 

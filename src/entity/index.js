@@ -31,6 +31,12 @@ db.Developer = require('./Developer.entity.js')(sequelize, Sequelize);
 db.Location = require('./Location.entity.js')(sequelize, Sequelize); // For standardizing locations
 db.UserSearchTrack = require('./UserSearchTrack.entity.js')(sequelize, Sequelize);
 db.UserFav = require('./UserFav.entity.js')(sequelize, Sequelize);
+db.Agent = require('./Agent.entity.js')(sequelize, Sequelize);
+
+db.Agent.belongsTo(db.User, {
+    foreignKey: 'userId',
+    as: 'user',
+});
 
 db.UserFav.belongsTo(db.User, {
     foreignKey: 'userId',
@@ -72,7 +78,10 @@ db.User.hasMany(db.Property, {
     foreignKey: 'userId',
     as: 'listedProperties',
 });
-
+db.User.hasOne(db.Agent, {
+    foreignKey: 'agentId',
+    as: 'agent',
+});
 
 
 db.Property.belongsTo(db.User, {

@@ -141,6 +141,8 @@ async function seedDatabase() {
             reraRegistrationNumber: 'RERA/JHD/123/2024',
             projectAmenities: ['Clubhouse', 'Swimming Pool', 'Gym', 'Kids Play Area', 'Yoga Deck'],
             developerId: developer1.id,
+            latitude: 22.8018, // Example: Sakchi center
+            longitude: 86.2029,
         });
 
         const project2 = await db.Project.create({
@@ -154,6 +156,8 @@ async function seedDatabase() {
             reraRegistrationNumber: 'RERA/JHD/456/2025',
             projectAmenities: ['Clubhouse', 'Parks', 'Jogging Track', 'Sports Facilities'],
             developerId: developer2.id,
+            latitude: 22.8018, // Example: Sakchi center
+            longitude: 86.2029,
         });
 
         const project3 = await db.Project.create({
@@ -167,6 +171,8 @@ async function seedDatabase() {
             reraRegistrationNumber: 'RERA/JHD/789/2023',
             projectAmenities: ['Lift', 'Power Backup', 'Security', 'Community Hall'],
             developerId: developer1.id,
+            latitude: 22.8018, // Example: Sakchi center
+            longitude: 86.2029,
         });
         console.log('Projects created.');
 
@@ -194,6 +200,7 @@ async function seedDatabase() {
             ownershipType: 'freehold',
             userId: user1.id,
             locationId: locationSakchi.id,
+
         });
 
         const prop2 = await db.Property.create({

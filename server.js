@@ -49,7 +49,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(bodyParser.json());
 
-// db.UserFav.sync({ alter: true });
+// db.Agent.sync({ alter: true });
 
 // db.sequelize.sync({alter:true}).then(() => {
 //     console.log("Drop and re-sync db.");
