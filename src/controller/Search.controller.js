@@ -246,8 +246,8 @@ exports.searchProperties = async (req, res) => {
             }];
         }
         projectInclude.include.push({
-            model: db.PropertyImage,
-            as: 'images',
+            model: db.PropertyAttachment,
+            as: 'attachment',
             required: false
         })
         includeClause.push(projectInclude);
@@ -263,8 +263,8 @@ exports.searchProperties = async (req, res) => {
                 required: false
             },
                 {
-                    model: db.PropertyImage,
-                    as: 'images',
+                    model: db.PropertyAttachment,
+                    as: 'attachment',
                     required: false
                 }]
         });
@@ -344,8 +344,8 @@ exports.searchProperties = async (req, res) => {
     }
 
     includeClause.push({
-        model: db.PropertyImage,
-        as: 'images',
+        model: db.PropertyAttachment,
+        as: 'attachment',
         required: false,
     });
 

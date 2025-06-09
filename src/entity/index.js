@@ -25,7 +25,7 @@ db.sequelize = sequelize;
 db.User = require("./User.entity.js")(sequelize, Sequelize);
 db.Property = require('./Property.entity.js')(sequelize, Sequelize);
 db.PropertyFeature = require('./PropertyFeature.entity.js')(sequelize, Sequelize);
-db.PropertyImage = require('./PropertyImage.entity.js')(sequelize, Sequelize);
+db.PropertyAttachment = require('./PropertyAttachment.entity.js')(sequelize, Sequelize);
 db.Project = require('./Project.entity.js')(sequelize, Sequelize);
 db.Developer = require('./Developer.entity.js')(sequelize, Sequelize);
 db.Location = require('./Location.entity.js')(sequelize, Sequelize); // For standardizing locations
@@ -93,9 +93,9 @@ db.Property.hasOne(db.PropertyFeature, {
     as: 'features',
     onDelete: 'CASCADE', // If property is deleted, delete its features
 });
-db.Property.hasMany(db.PropertyImage, {
+db.Property.hasMany(db.PropertyAttachment, {
     foreignKey: 'propertyId',
-    as: 'images',
+    as: 'attachment',
     onDelete: 'CASCADE',
 });
 db.Property.belongsTo(db.Project, {
@@ -121,20 +121,20 @@ db.PropertyFeature.belongsTo(db.Property, {
 
 
 
-db.PropertyImage.belongsTo(db.Property, {
+db.PropertyAttachment.belongsTo(db.Property, {
     foreignKey: 'propertyId',
     as: 'property',
 });
-db.PropertyImage.belongsTo(db.Project, {
+db.PropertyAttachment.belongsTo(db.Project, {
     foreignKey: 'projectId',
     as: 'project',
 });
 
 
 
-db.Project.hasMany(db.PropertyImage, {
+db.Project.hasMany(db.PropertyAttachment, {
     foreignKey: 'projectId',
-    as: 'images',
+    as: 'attachment',
     onDelete: 'CASCADE',
 });
 db.Project.hasMany(db.Property, {

@@ -34,10 +34,23 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'acre',
       field: "project_land_unit",
     },
+
+    projectConfiguration:{
+      type: DataTypes.JSONB,
+      field: "project_configuration",
+    },
+    projectUnitDetail: {
+      type: DataTypes.JSONB,
+      field: "project_unit_detail",
+    },
+    projectAdditionalDetail: { // Store as JSONB if your DB supports it, or a text array/comma-separated string
+      type: DataTypes.JSONB, // Example: ['Clubhouse', 'Pool', 'Gym']
+      defaultValue: [],
+      field: "project_addl_detail",
+    },
     numberOfTowers: {
       type: DataTypes.INTEGER,
       field: "project_no_of_towers",
-
     },
     reraRegistrationNumber: {
       type: DataTypes.STRING,

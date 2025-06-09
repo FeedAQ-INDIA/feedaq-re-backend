@@ -12,7 +12,7 @@ async function seedDatabase() {
 
         // --- 2. Clear Existing Data (Optional - useful for fresh seeds) ---
         console.log('Clearing existing data...');
-        await db.PropertyImage.destroy({ truncate: true, cascade: true });
+        await db.PropertyAttachment.destroy({ truncate: true, cascade: true });
         await db.PropertyFeature.destroy({ truncate: true, cascade: true });
         await db.Property.destroy({ truncate: true, cascade: true });
         await db.Project.destroy({ truncate: true, cascade: true });
@@ -420,7 +420,7 @@ async function seedDatabase() {
 
         // --- 9. Create Property Images ---
         console.log('Creating property images...');
-        await db.PropertyImage.bulkCreate([
+        await db.PropertyAttachment.bulkCreate([
             { propertyId: prop1.id, imageUrl: 'https://via.placeholder.com/600x400/FF5733/FFFFFF?text=Sakchi_Apt_1', isPrimary: true, caption: 'Living Room' },
             { propertyId: prop1.id, imageUrl: 'https://via.placeholder.com/600x400/C70039/FFFFFF?text=Sakchi_Apt_2', caption: 'Bedroom' },
             { propertyId: prop2.id, imageUrl: 'https://via.placeholder.com/600x400/900C3F/FFFFFF?text=Kadma_Villa_1', isPrimary: true, caption: 'Exterior View' },

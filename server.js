@@ -21,6 +21,7 @@ const logger = require('./src/config/winston.config.js')
 const {seedDatabase} = require("./src/controller/DummyInsert");
 
 
+
 const swaggerOptions = {
     definition: {
         openapi: "3.1.0", info: {
@@ -54,6 +55,7 @@ app.use(bodyParser.json());
 // db.sequelize.sync({alter:true}).then(() => {
 //     console.log("Drop and re-sync db.");
 // });
+
 
 
 // app.use(function (req, res, next) {

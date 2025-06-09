@@ -127,10 +127,10 @@ module.exports = (sequelize, Sequelize) => {
                 field: "agent_is_verified",
             },
 
-            agentIsGold: {
-                type: Sequelize.BOOLEAN,
-                defaultValue: false,
-                field: "agent_is_gold",
+            agentPartnerType: {
+                type: Sequelize.ENUM('Platinum Partner',  'Gold Member', 'Silver Member', 'Bronze Member'),
+                defaultValue: null,
+                field: "agent_partner_type",
             },
 
             latitude: { // Keep for easier input/output
