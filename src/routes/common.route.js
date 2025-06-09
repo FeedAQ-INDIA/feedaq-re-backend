@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const genericController = require("../controller/Generic.controller.js");
-const searchController = require("../controller/Search.controller.js");
+const propertySearchController = require("../controller/PropertySearch.controller.js");
 const projectSearchController = require("../controller/ProjectSearch.controller.js");
 const agentSearchController = require("../controller/AgentSearch.controller.js");
  const authMiddleware = require("../middleware/authMiddleware");
@@ -27,7 +27,7 @@ router.post("/registerAgent", authMiddleware, genericController.registerAgent);
 router.post("/deregisterAgent", authMiddleware, genericController.saveUserFav);
 
 
-router.get("/search", userIdExtracter,   searchController.searchProperties);
+router.get("/search", userIdExtracter,   propertySearchController.searchProperties);
 router.get("/searchProject", userIdExtracter,   projectSearchController.searchProjects);
 router.get("/searchAgent", userIdExtracter,   agentSearchController.searchAgents);
 

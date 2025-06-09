@@ -246,7 +246,7 @@ exports.searchProperties = async (req, res) => {
             }];
         }
         projectInclude.include.push({
-            model: db.PropertyAttachment,
+            model: db.ProjectAttachment,
             as: 'attachment',
             required: false
         })
@@ -263,7 +263,7 @@ exports.searchProperties = async (req, res) => {
                 required: false
             },
                 {
-                    model: db.PropertyAttachment,
+                    model: db.ProjectAttachment,
                     as: 'attachment',
                     required: false
                 }]

@@ -26,6 +26,7 @@ db.User = require("./User.entity.js")(sequelize, Sequelize);
 db.Property = require('./Property.entity.js')(sequelize, Sequelize);
 db.PropertyFeature = require('./PropertyFeature.entity.js')(sequelize, Sequelize);
 db.PropertyAttachment = require('./PropertyAttachment.entity.js')(sequelize, Sequelize);
+db.ProjectAttachment = require('./ProjectAttachment.entity.js')(sequelize, Sequelize);
 db.Project = require('./Project.entity.js')(sequelize, Sequelize);
 db.Developer = require('./Developer.entity.js')(sequelize, Sequelize);
 db.Location = require('./Location.entity.js')(sequelize, Sequelize); // For standardizing locations
@@ -125,14 +126,14 @@ db.PropertyAttachment.belongsTo(db.Property, {
     foreignKey: 'propertyId',
     as: 'property',
 });
-db.PropertyAttachment.belongsTo(db.Project, {
+db.ProjectAttachment.belongsTo(db.Project, {
     foreignKey: 'projectId',
     as: 'project',
 });
 
 
 
-db.Project.hasMany(db.PropertyAttachment, {
+db.Project.hasMany(db.ProjectAttachment, {
     foreignKey: 'projectId',
     as: 'attachment',
     onDelete: 'CASCADE',

@@ -1,11 +1,11 @@
-// models/propertyImage.js
+// models/projectImage.js
 module.exports = (sequelize, DataTypes) => {
-  const PropertyAttachment = sequelize.define('propertyattach', {
+  const ProjectAttachment = sequelize.define('projectattach', {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: "propertyattach_id",
+      field: "projectattach_id",
     },
     url: {
       type: DataTypes.STRING,
@@ -13,35 +13,36 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isUrl: true,
       },
-      field: "propertyattach_image_url",
+      field: "projectattach_image_url",
     },
     isPrimary: { // To set one image as the main display image
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-      field: "propertyattach_is_primary",
+      field: "projectattach_is_primary",
     },
     caption: {
       type: DataTypes.STRING(255),
-      field: "propertyattach_caption",
+      field: "projectattach_caption",
     },
     type: {
       type: DataTypes.ENUM('IMAGE', 'VIDEO', 'SHORTS', 'DOCS'),
-      field: "propertyattach_type",
+      field: "projectattach_type",
       defaultValue:null
     },
-    propertyId: {
+
+
+    projectId: {
       type: DataTypes.INTEGER,
-      field: "propertyattach_property_id",
+      field: "projectattach_project_id",
       references: {
-        model: "property",
-        key: "property_id",
+        model: "project",
+        key: "project_id",
       },
     },
-
    }, {
-    tableName: 'propertyattach',
+    tableName: 'projectattach',
     timestamps: true, // When the image was added
   });
 
-  return PropertyAttachment;
+  return ProjectAttachment;
 };

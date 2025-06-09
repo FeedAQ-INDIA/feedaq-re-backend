@@ -24,6 +24,12 @@ exports.searchProjects = async (req, res) => {
         // Fetch paginated project results mapped to Sequelize model
         const result = await db.Project.findAndCountAll({
             where: whereGeo,
+            include:[
+                {
+                    model: db.ProjectAttachment,
+                    as: "attachment",
+                }
+            ],
             limit: parsedLimit,
             offset,
         });
