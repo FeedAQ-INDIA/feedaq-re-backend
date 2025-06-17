@@ -72,7 +72,10 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.STRING(200),
                 field: "agent_office_address",
             },
-
+            agentLocality: {
+                type: Sequelize.STRING(100),
+                field: "agent_locality",
+            },
             agentCity: {
                 type: Sequelize.STRING(100),
                 field: "agent_city",
