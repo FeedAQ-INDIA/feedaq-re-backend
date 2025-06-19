@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL(15, 2),
       field: "property_price",
     },
+
     rent: { // For Rent
       type: DataTypes.DECIMAL(12, 2),
       field: "property_rent",
@@ -117,13 +118,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       field: "property_availability_date",
     },
-    securityDeposit: { // For rent
-      type: DataTypes.DECIMAL(12, 2),
-      field: "property_security_deposit",
-    },
-    maintenanceCharges: { // For rent
-      type: DataTypes.DECIMAL(10, 2),
-      field: "property_maintenance_charges",
+    additionalPriceBreakup:{
+      type: DataTypes.JSONB,
+      field: "property_addl_price_breakup",
     },
     isVerified: { // By platform
       type: DataTypes.BOOLEAN,

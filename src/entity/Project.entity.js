@@ -73,35 +73,35 @@ module.exports = (sequelize, DataTypes) => {
 
     //ADDRESS ---
     addressLine1: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       field: "project_addressline_1",
     },
     addressLine2: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       field: "project_addressline_2",
     },
     locality: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       field: "project_locality",
     },
     city: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       field: "project_city"
     },
     state: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
       field: "project_state",
     },
     zipCode: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       field: "project_zipcode",
     },
     country: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       defaultValue: 'India',
       field: "project_country",
     },

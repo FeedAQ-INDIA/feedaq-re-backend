@@ -18,7 +18,7 @@ const swaggerUi = require("swagger-ui-express");
 require("./google_oauth.js");
 require("./microsoft_oauth.js");
 const logger = require('./src/config/winston.config.js')
-const {seedDatabase} = require("./src/controller/DummyInsert");
+const {seed} = require("./src/controller/DummyInsert");
 
 
 
@@ -52,11 +52,9 @@ app.use(bodyParser.json());
 
 // db.Agent.sync({ alter: true });
 
-// db.sequelize.sync({alter:true}).then(() => {
+// db.sequelize.sync({force:true}).then(() => {
 //     console.log("Drop and re-sync db.");
 // });
-
-
 
 // app.use(function (req, res, next) {
 //     // console.log("Req type : " + req.method + ' : ' + req)
@@ -74,5 +72,6 @@ app.listen(port, '0.0.0.0', () => {
     console.log(`Example app listening on port ${port}`);
 });
 
+// seed();
 
 // seedDatabase();
