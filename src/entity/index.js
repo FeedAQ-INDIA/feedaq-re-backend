@@ -29,7 +29,7 @@ db.PropertyAttachment = require('./PropertyAttachment.entity.js')(sequelize, Seq
 db.ProjectAttachment = require('./ProjectAttachment.entity.js')(sequelize, Sequelize);
 db.Project = require('./Project.entity.js')(sequelize, Sequelize);
 db.Developer = require('./Developer.entity.js')(sequelize, Sequelize);
-db.Location = require('./Location.entity.js')(sequelize, Sequelize); // For standardizing locations
+// db.Location = require('./Location.entity.js')(sequelize, Sequelize); // For standardizing locations
 db.UserSearchTrack = require('./UserSearchTrack.entity.js')(sequelize, Sequelize);
 db.UserFav = require('./UserFav.entity.js')(sequelize, Sequelize);
 db.Agent = require('./Agent.entity.js')(sequelize, Sequelize);
@@ -104,10 +104,10 @@ db.Property.belongsTo(db.Project, {
     as: 'project',
     allowNull: true, // A property doesn't *have* to belong to a project
 });
-db.Property.belongsTo(db.Location, {
-    foreignKey: 'locationId',
-    as: 'locatedIn',
-});
+// db.Property.belongsTo(db.Location, {
+//     foreignKey: 'locationId',
+//     as: 'locatedIn',
+// });
 db.Property.hasOne(db.UserFav, {
     foreignKey: 'propertyId',
     as: 'fav',
@@ -154,10 +154,10 @@ db.Developer.hasMany(db.Project, {
 });
 
 
-db.Location.hasMany(db.Property, {
-    foreignKey: 'locationId',
-    as: 'propertiesInLocation',
-});
+// db.Location.hasMany(db.Property, {
+//     foreignKey: 'locationId',
+//     as: 'propertiesInLocation',
+// });
 
 
 

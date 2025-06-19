@@ -70,6 +70,41 @@ module.exports = (sequelize, DataTypes) => {
         key: "developer_id",
       },
     },
+
+    //ADDRESS ---
+    addressLine1: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      field: "project_addressline_1",
+    },
+    addressLine2: {
+      type: Sequelize.STRING,
+      field: "project_addressline_2",
+    },
+    locality: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      field: "project_locality",
+    },
+    city: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      field: "project_city"
+    },
+    state: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      field: "project_state",
+    },
+    zipCode: {
+      type: Sequelize.STRING,
+      field: "project_zipcode",
+    },
+    country: {
+      type: Sequelize.STRING,
+      defaultValue: 'India',
+      field: "project_country",
+    },
     latitude: { // Keep for easier input/output
       type: DataTypes.DECIMAL(10, 8),
       field: "project_latitude",

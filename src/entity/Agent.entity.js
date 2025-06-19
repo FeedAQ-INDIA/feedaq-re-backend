@@ -135,7 +135,40 @@ module.exports = (sequelize, Sequelize) => {
                 defaultValue: null,
                 field: "agent_partner_type",
             },
-
+            //ADDRESS ---
+            addressLine1: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                field: "agent_addressline_1",
+            },
+            addressLine2: {
+                type: Sequelize.STRING,
+                field: "agent_addressline_2",
+            },
+            locality: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                field: "agent_locality",
+            },
+            city: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                field: "agent_city"
+            },
+            state: {
+                type: Sequelize.STRING,
+                allowNull: false,
+                field: "agent_state",
+            },
+            zipCode: {
+                type: Sequelize.STRING,
+                field: "agent_zipcode",
+            },
+            country: {
+                type: Sequelize.STRING,
+                defaultValue: 'India',
+                field: "agent_country",
+            },
             latitude: { // Keep for easier input/output
                 type: Sequelize.DECIMAL(10, 8),
                 field: "agent_latitude",

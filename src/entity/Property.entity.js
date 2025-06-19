@@ -21,6 +21,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       field: "property_transaction_type",
     },
+    category: {
+      type: DataTypes.ENUM('residential', 'commercial', 'industrial', 'land', 'other'),
+      allowNull: false,
+      defaultValue: 'residential',
+      field: 'property_category',
+    },
     propertyType: { // Apartment, Independent House, Builder Floor, Plot, etc.
       type: DataTypes.ENUM(
           'apartment', 'independent_house', 'villa', 'builder_floor',
@@ -145,18 +151,77 @@ module.exports = (sequelize, DataTypes) => {
         key: "project_id",
       },
     },
-    locationId: {
-      type: DataTypes.INTEGER,
-      field: "property_location_id",
-      references: {
-        model: "location",
-        key: "location_id",
-      },
+    // userId, projectId will be added by associations
+
+    //ADDRESS ---
+    addressLine1: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "property_addressline_1",
     },
-    // userId, projectId, locationId will be added by associations
+    addressLine2: {
+      type: DataTypes.STRING,
+      field: "property_addressline_2",
+    },
+    locality: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "property_locality",
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "property_city"
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "property_state",
+    },
+    zipCode: {
+      type: DataTypes.STRING,
+      field: "property_zipcode",
+    },
+    country: {
+      type: DataTypes.STRING,
+      defaultValue: 'India',
+      field: "property_country",
+    },
+    latitude: {
+      type: DataTypes.DECIMAL(10, 8),
+      field: "property_latitude",
+    },
+    longitude: {
+      type: DataTypes.DECIMAL(11, 8),
+      field: "property_longitude",
+    },
+    geom: {
+      type: DataTypes.GEOMETRY('Point', 4326), // 'Point' type, SRID 4326 (WGS84 - standard lat/lon)
+      allowNull: true, // Allow null if not all locations have precise coordinates
+      field: "property_geoam",
+    }
   }, {
     tableName: 'property',
     timestamps: true,
+    indexes: [
+      {
+        fields: ['property_geoam'],
+        using: 'GIST', // GIST index for geospatial queries
+      }
+    ]
+  });
+
+  // Hook to automatically populate 'geom' from latitude/longitude
+  Property.beforeSave(async (location, options) => {
+    if (location.latitude && location.longitude) {
+      location.geom = {
+        type: 'Point',
+        coordinates: [parseFloat(location.longitude), parseFloat(location.latitude)], // GeoJSON expects [longitude, latitude]
+        crs: { type: 'name', properties: { name: 'EPSG:4326' } }
+      };
+    } else {
+      location.geom = null; // Clear geom if coordinates are removed
+    }
   });
 
   return Property;

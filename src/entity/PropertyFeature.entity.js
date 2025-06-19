@@ -7,71 +7,13 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       field: "propertyfeature_id",
     },
-    // Assuming boolean flags for common features
-    hasParking: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_parking",
+    featureName: {
+      type: DataTypes.STRING(50),
+      field: "propertyfeature_name",
     },
-    hasLift: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_lift",
-    },
-    hasPowerBackup: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_power_backup",
-    },
-    hasSecurity: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_security",
-    },
-    hasWaterSupply: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_water_supply",
-    },
-    hasGym: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_gym",
-    },
-    hasSwimmingPool: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_swim_pool",
-    },
-    hasPlayArea: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_play_area",
-    },
-    hasClubhouse: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_club_house",
-    },
-    hasServantRoom: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_servant_room",
-    },
-    hasPoojaRoom: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_pooja_room",
-    },
-    hasStudyRoom: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_study_room",
-    },
-    hasPrivateTerraceGarden: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-      field: "propertyfeature_has_private_terrace_garden",
+    featureValue: {
+      type: DataTypes.STRING(50),
+      field: "propertyfeature_value",
     },
     propertyId: {
       type: DataTypes.INTEGER,
