@@ -28,7 +28,12 @@ exports.searchProjects = async (req, res) => {
                 {
                     model: db.ProjectAttachment,
                     as: "attachment",
-                }
+                },
+                {
+                    model: db.ProjectFeature,
+                    as: "features",
+                },
+
             ],
             limit: parsedLimit,
             offset,

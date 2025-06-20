@@ -146,6 +146,12 @@ exports.searchProperties = async (req, res) => {
 
         // Attachments + Fav
         include.push({ model: db.PropertyAttachment, as: 'attachment', where: { isPrimary: true }, required: false });
+        include.push({
+            model: db.PropertyConfiguration,
+            as: "configurations",
+            required: false,
+        });
+
         if (req.user) {
             include.push({
                 model: db.UserFav,
