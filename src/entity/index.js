@@ -89,7 +89,7 @@ db.Property.belongsTo(db.User, {
     foreignKey: 'userId',
     as: 'lister',
 });
-db.Property.hasOne(db.PropertyFeature, {
+db.Property.hasMany(db.PropertyFeature, {
     foreignKey: 'propertyId',
     as: 'features',
     onDelete: 'CASCADE', // If property is deleted, delete its features

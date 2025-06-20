@@ -2,6 +2,9 @@
 const { Op } = require('sequelize');
 const db = require("../entity/index.js");
 
+
+//http://localhost:8080/search?lat=19.17380000&lng=72.86000000&radius=5&transactionType=buy&featureFilters={%22hasSwimmingPool%22:%22Yes%22}
+
 const buildRangeQuery = (minParam, maxParam, query) => {
     const range = {};
     if (query[minParam]) range[Op.gte] = parseFloat(query[minParam]);
@@ -27,8 +30,10 @@ exports.searchProperties = async (req, res) => {
             locationLocality, locationCity, locationState, lat, lng, radius,
             sortBy, page = 1, limit = 10, keyword, status, featureFilters,
             minPrice, maxPrice, minRent, maxRent, minBedrooms, maxBedrooms, minBathrooms, maxBathrooms, minCarpetArea, maxCarpetArea,
-            hasParking, hasLift, hasPowerBackup, hasSecurity, hasGym, hasSwimmingPool, hasClubhouse
+
         } = req.query;
+
+        // hasParking, hasLift, hasPowerBackup, hasSecurity, hasGym, hasSwimmingPool, hasClubhouse
 
         let where = {};
         const include = [];
@@ -66,27 +71,15 @@ exports.searchProperties = async (req, res) => {
         // Feature key-value filters
         if (featureFilters) {
             const filters = typeof featureFilters === 'string' ? JSON.parse(featureFilters) : featureFilters;
+            console.log('//////////////////////////////////////////////////////////////////////')
+            console.log('Filters :: ',filters)
+            let featureCond =  Object.entries(filters).map(([k, v]) => ({ featureKey: k, featureValue: v }))
+            console.log('Filters Conf :: ',featureCond)
             include.push({
                 model: db.PropertyFeature,
                 as: 'features',
-                where: { [Op.or]: Object.entries(filters).map(([k, v]) => ({ featureName: k, featureValue: v })) },
+                where: { [Op.or]: featureCond},
                 required: true
-            });
-        } else {
-            const featureWhere = {};
-            if (parseBoolean(hasParking)) featureWhere.hasParking = true;
-            if (parseBoolean(hasLift)) featureWhere.hasLift = true;
-            if (parseBoolean(hasPowerBackup)) featureWhere.hasPowerBackup = true;
-            if (parseBoolean(hasSecurity)) featureWhere.hasSecurity = true;
-            if (parseBoolean(hasGym)) featureWhere.hasGym = true;
-            if (parseBoolean(hasSwimmingPool)) featureWhere.hasSwimmingPool = true;
-            if (parseBoolean(hasClubhouse)) featureWhere.hasClubhouse = true;
-
-            include.push({
-                model: db.PropertyFeature,
-                as: 'features',
-                where: Object.keys(featureWhere).length ? featureWhere : undefined,
-                required: !!Object.keys(featureWhere).length
             });
         }
 

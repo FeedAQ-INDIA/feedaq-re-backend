@@ -52,7 +52,7 @@ app.use(bodyParser.json());
 
 // db.Agent.sync({ alter: true });
 
-// db.sequelize.sync({force:true}).then(() => {
+// db.sequelize.sync({alter:true}).then(() => {
 //     console.log("Drop and re-sync db.");
 // });
 

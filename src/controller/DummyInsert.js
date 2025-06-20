@@ -124,8 +124,8 @@ const seed = async () => {
             state: "Maharashtra",
             zipCode: "400063",
             country: "India",
-            latitude: 19.1738,
-            longitude: 72.8600,
+            latitude: 22.7933,
+            longitude: 86.2643,
         });
 
         // --- Add Property Feature ---

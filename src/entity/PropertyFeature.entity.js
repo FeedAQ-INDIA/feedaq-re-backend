@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       field: "propertyfeature_id",
     },
+    featureKey: {
+      type: DataTypes.STRING(50),
+      field: "propertyfeature_key",
+    },
     featureName: {
       type: DataTypes.STRING(50),
       field: "propertyfeature_name",
