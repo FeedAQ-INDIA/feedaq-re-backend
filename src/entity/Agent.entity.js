@@ -136,6 +136,14 @@ module.exports = (sequelize, Sequelize) => {
                 field: "agent_partner_type",
             },
             //ADDRESS ---
+            mapReferenceId: {
+                type: Sequelize.STRING,
+                field: "agent_map_ref_id",
+            },
+            mapReferenceAddress: {
+                type: Sequelize.STRING,
+                field: "agent_map_ref_aadress",
+            },
             addressLine1: {
                 type: Sequelize.STRING,
                 allowNull: false,

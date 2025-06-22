@@ -7,6 +7,14 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       field: "developer_id",
     },
+    userId: {
+      type: DataTypes.INTEGER,
+      field: "developer_user_id",
+      references: {
+        model: "user",
+        key: "user_id",
+      },
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,

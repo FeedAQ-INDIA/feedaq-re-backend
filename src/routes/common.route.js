@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const genericController = require("../controller/Generic.controller.js");
+const listingController = require("../controller/ManageListing.controller.js");
 const propertySearchController = require("../controller/PropertySearch.controller.js");
 const projectSearchController = require("../controller/ProjectSearch.controller.js");
 const agentSearchController = require("../controller/AgentSearch.controller.js");
  const authMiddleware = require("../middleware/authMiddleware");
  const logger = require('../config/winston.config.js')
 const userIdExtracter = require("../middleware/userIdExtracter");
+
+
 
 router.get("/ping", function (req, res) {
     res.status(200).send({message: "Ping Successful"});
@@ -32,6 +35,9 @@ router.get("/searchProject", userIdExtracter,   projectSearchController.searchPr
 router.get("/searchAgent", userIdExtracter,   agentSearchController.searchAgents);
 
 
+router.post("/saveProperty", userIdExtracter,   listingController.saveProperty);
+router.post("/saveProject", userIdExtracter,   listingController.saveProject);
+router.post("/saveDeveloper", userIdExtracter,   listingController.saveDeveloper);
 
 
 module.exports = router;

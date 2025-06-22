@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(50),
       field: "projectfeature_key",
     },
+    featureCategory: {
+      type: DataTypes.STRING(50),
+      field: "projectfeature_category",
+    },
     featureName: {
       type: DataTypes.STRING(50),
       field: "projectfeature_name",

@@ -1,41 +1,41 @@
 // models/propertyFeature.js
 module.exports = (sequelize, DataTypes) => {
-  const PropertyConfiguration = sequelize.define('propertyconf', {
+  const ProjectConfiguration = sequelize.define('projectconf', {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      field: "propertyconf_id",
+      field: "projectconf_id",
     },
     configurationKey: {
       type: DataTypes.STRING(50),
-      field: "propertyconf_key",
+      field: "projectconf_key",
     },
     configurationCategory: {
       type: DataTypes.STRING(50),
-      field: "propertyconf_category",
+      field: "projectconf_category",
     },
     configurationName: {
       type: DataTypes.STRING(50),
-      field: "propertyconf_name",
+      field: "projectconf_name",
     },
     configurationValue: {
       type: DataTypes.STRING(50),
-      field: "propertyconf_value",
+      field: "projectconf_value",
     },
-    propertyId: {
+    projectId: {
       type: DataTypes.INTEGER,
-      field: "propertyconf_property_id",
+      field: "projectconf_property_id",
       references: {
-        model: "property",
-        key: "property_id",
+        model: "project",
+        key: "project_id",
       },
     },
     // propertyId will be added by association
   }, {
-    tableName: 'propertyconf',
+    tableName: 'projectconf',
     timestamps: false, // Features are typically part of property creation
   });
 
-  return PropertyConfiguration;
+  return ProjectConfiguration;
 };

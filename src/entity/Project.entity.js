@@ -34,19 +34,9 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 'acre',
       field: "project_land_unit",
     },
-
-    projectConfiguration:{
-      type: DataTypes.JSONB,
-      field: "project_configuration",
-    },
     projectUnitDetail: {
       type: DataTypes.JSONB,
       field: "project_unit_detail",
-    },
-    projectAdditionalDetail: { // Store as JSONB if your DB supports it, or a text array/comma-separated string
-      type: DataTypes.JSONB, // Example: ['Clubhouse', 'Pool', 'Gym']
-      defaultValue: [],
-      field: "project_addl_detail",
     },
     numberOfTowers: {
       type: DataTypes.INTEGER,
@@ -57,10 +47,13 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       field: "project_rera_no",
     },
-    projectAmenities: { // Store as JSONB if your DB supports it, or a text array/comma-separated string
-      type: DataTypes.JSONB, // Example: ['Clubhouse', 'Pool', 'Gym']
-      defaultValue: [],
-      field: "project_amenities",
+    userId: {
+      type: DataTypes.INTEGER,
+      field: "project_user_id",
+      references: {
+        model: "user",
+        key: "user_id",
+      },
     },
     developerId: {
       type: DataTypes.INTEGER,
@@ -70,8 +63,28 @@ module.exports = (sequelize, DataTypes) => {
         key: "developer_id",
       },
     },
-
+    isVerified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      field: "project_is_verified",
+    },
+    minPrice: {
+      type: DataTypes.DECIMAL(15, 2),
+      field: "project_min_price",
+    },
+    maxPrice: {
+      type: DataTypes.DECIMAL(15, 2),
+      field: "project_max_price",
+    },
     //ADDRESS ---
+    mapReferenceId: {
+      type: DataTypes.STRING,
+      field: "project_map_ref_id",
+    },
+    mapReferenceAddress: {
+      type: DataTypes.STRING,
+      field: "project_map_ref_aadress",
+    },
     addressLine1: {
       type: DataTypes.STRING,
       allowNull: false,

@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       field: "property_description",
     },
+    rules: {
+      type: DataTypes.TEXT,
+      field: "property_rules",
+    },
     transactionType: { // Buy or Rent
       type: DataTypes.ENUM('buy', 'rent'),
       allowNull: false,
@@ -40,7 +44,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL(15, 2),
       field: "property_price",
     },
-
     rent: { // For Rent
       type: DataTypes.DECIMAL(12, 2),
       field: "property_rent",
@@ -151,6 +154,14 @@ module.exports = (sequelize, DataTypes) => {
     // userId, projectId will be added by associations
 
     //ADDRESS ---
+    mapReferenceId: {
+      type: DataTypes.STRING,
+       field: "property_map_ref_id",
+    },
+    mapReferenceAddress: {
+      type: DataTypes.STRING,
+      field: "property_map_ref_aadress",
+    },
     addressLine1: {
       type: DataTypes.STRING,
       allowNull: false,

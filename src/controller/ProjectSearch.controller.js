@@ -33,6 +33,10 @@ exports.searchProjects = async (req, res) => {
                     model: db.ProjectFeature,
                     as: "features",
                 },
+                {
+                    model: db.ProjectConfiguration,
+                    as: "configurations",
+                },
 
             ],
             limit: parsedLimit,
