@@ -44,7 +44,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     reraRegistrationNumber: {
       type: DataTypes.STRING,
-      unique: true,
       field: "project_rera_no",
     },
     userId: {

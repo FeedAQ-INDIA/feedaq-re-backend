@@ -185,6 +185,8 @@ async function saveProperty(req) {
 }
 
 async function saveProject(req) {
+
+    console.log(req.body)
     const {
         id,
         name,
@@ -244,6 +246,8 @@ async function saveProject(req) {
             country,
             latitude,
             longitude,
+            userId: req.user.userId,
+
         }, {
             where: { id }
         });
@@ -281,6 +285,7 @@ async function saveProject(req) {
             country,
             latitude,
             longitude,
+            userId: req.user.userId,
         });
     }
 

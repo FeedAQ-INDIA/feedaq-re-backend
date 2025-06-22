@@ -35,9 +35,13 @@ router.get("/searchProject", userIdExtracter,   projectSearchController.searchPr
 router.get("/searchAgent", userIdExtracter,   agentSearchController.searchAgents);
 
 
-router.post("/saveProperty", userIdExtracter,   listingController.saveProperty);
-router.post("/saveProject", userIdExtracter,   listingController.saveProject);
-router.post("/saveDeveloper", userIdExtracter,   listingController.saveDeveloper);
+router.post("/saveProperty", authMiddleware,   listingController.saveProperty);
+router.post("/saveProject", authMiddleware,   listingController.saveProject);
+router.post("/saveDeveloper", authMiddleware,   listingController.saveDeveloper);
 
+router.get("/getProjectFeatures",   listingController.getProjectFeatures);
+router.get("/getProjectConfiguration",  listingController.getProjectConfiguration);
+router.get("/getPropertyFeatures",  listingController.getPropertyFeatures);
+router.get("/getPropertyConfiguration", listingController.getPropertyConfiguration);
 
 module.exports = router;
