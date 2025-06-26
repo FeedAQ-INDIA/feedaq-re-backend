@@ -102,6 +102,7 @@ async function saveProperty(req) {
             country,
             latitude,
             longitude,
+            userId: req.user.userId,
         }, {
             where: { id },
         });
@@ -156,6 +157,7 @@ async function saveProperty(req) {
             country,
             latitude,
             longitude,
+            userId: req.user.userId,
         });
     }
 
@@ -338,6 +340,7 @@ async function saveDeveloper(req) {
             email,
             contactNumber,
             description,
+            userId: req.user.userId,
         });
     } else {
         console.log({
@@ -353,6 +356,7 @@ async function saveDeveloper(req) {
             email,
             contactNumber,
             description,
+            userId: req.user.userId,
         })
     }
     return res;
