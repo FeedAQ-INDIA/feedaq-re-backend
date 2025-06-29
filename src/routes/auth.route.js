@@ -72,13 +72,13 @@ router.get(
       const redirectUrl =  req.cookies?.postAuthRedirect || `${frontendUrl}`;
 
       let accessToken  = jwt.sign(claims, accessTokenSecret, {
-          expiresIn: '1m',
+          expiresIn: '30m',
         });
       claims = {...claims }
 
 
       const refreshToken = jwt.sign(claims, refreshTokenSecret, {
-        expiresIn: "15m",
+        expiresIn: "60m",
       });
 
       res.cookie("accessToken", accessToken, {
@@ -222,7 +222,7 @@ router.post("/auth/refresh-token", (req, res) => {
           userEmail: decoded.userEmail,
         },
         accessTokenSecret,
-        { expiresIn: "1m" }
+        { expiresIn: "30m" }
     );
 
     res.cookie("accessToken", newAccessToken, {

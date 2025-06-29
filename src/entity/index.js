@@ -33,10 +33,35 @@ db.Project = require('./Project.entity.js')(sequelize, Sequelize);
 db.ProjectConfiguration = require('./ProjectConfiguration.entity.js')(sequelize, Sequelize);
 db.ProjectFeature = require('./ProjectFeature.entity.js')(sequelize, Sequelize);
 db.Developer = require('./Developer.entity.js')(sequelize, Sequelize);
-// db.Location = require('./Location.entity.js')(sequelize, Sequelize); // For standardizing locations
 db.UserSearchTrack = require('./UserSearchTrack.entity.js')(sequelize, Sequelize);
 db.UserFav = require('./UserFav.entity.js')(sequelize, Sequelize);
 db.Agent = require('./Agent.entity.js')(sequelize, Sequelize);
+
+db.PGFeature = require("./pgColive/PGFeature.entity.js")(sequelize, Sequelize);
+db.PG  = require("./pgColive/PG.entity.js")(sequelize, Sequelize);
+db.PGAttachment    = require("./pgColive/PGAttachment.entity.js")(sequelize, Sequelize);
+db.PGRoom    = require("./pgColive/PGRoom.entity.js")(sequelize, Sequelize);
+
+//---------------------------------------------PG
+db.PGFeature.belongsTo(db.PG, { foreignKey: 'pgId',  as: 'pgdetail'});
+db.PGFeature.belongsTo(db.PGRoom, { foreignKey: 'pgRoomId' ,  as: 'pgroomdetail'});
+
+db.PGAttachment.belongsTo(db.PG, { foreignKey: 'pgId' ,  as: 'pgdetail'});
+db.PGAttachment.belongsTo(db.PGRoom, { foreignKey: 'pgRoomId'  ,  as: 'pgroomdetail'});
+
+
+db.PGRoom.belongsTo(db.PG, { foreignKey: 'pgId',  as: 'pgdetail' });
+db.PGRoom.hasMany(db.PGFeature, { foreignKey: 'pgRoomId', as: 'features' });
+db.PGRoom.hasMany(db.PGAttachment, { foreignKey: 'pgRoomId' ,  as: 'attachment'});
+
+db.PG.hasMany(db.PGRoom, { foreignKey: 'pgId' ,  as: 'pgroomdetail' });
+db.PG.hasMany(db.PGFeature, { foreignKey: 'pgId' , as: 'features'});
+db.PG.hasMany(db.PGAttachment, { foreignKey: 'pgId',  as: 'attachment' });
+db.PG.belongsTo(db.User, { foreignKey: 'userId' ,  as: 'userdetail' });
+
+
+
+//--------------------------------------------PG
 
 db.Agent.belongsTo(db.User, {
     foreignKey: 'userId',

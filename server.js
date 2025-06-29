@@ -19,7 +19,9 @@ require("./google_oauth.js");
 require("./microsoft_oauth.js");
 const logger = require('./src/config/winston.config.js')
 const {seed} = require("./src/controller/DummyInsert");
-
+const multer = require("multer");
+const sharp = require("sharp");
+const axios = require("axios");
 
 
 const swaggerOptions = {
@@ -56,6 +58,7 @@ app.use(bodyParser.json());
 //     console.log("Drop and re-sync db.");
 // });
 
+
 // app.use(function (req, res, next) {
 //     // console.log("Req type : " + req.method + ' : ' + req)
 //     res.setHeader("Access-Control-Allow-Origin", process.env.ACCESS_CONTROL_ALLOW_ORIGIN);
@@ -67,6 +70,66 @@ app.use(bodyParser.json());
 
 app.use(commonRoute);
 app.use(authRoute);
+
+
+
+// Supabase configuration
+const SUPABASE_URL = "https://your-project-id.supabase.co";  // Replace
+const SUPABASE_API_KEY = "your-service-role-key";            // Replace
+const BUCKET_NAME = "your-bucket-name";                      // Replace
+
+// Multer setup for memory storage
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+// Upload multiple files
+app.post("/upload", upload.array("files", 10), async (req, res) => {
+    try {
+        const uploadedUrls = [];
+
+        for (const file of req.files) {
+            const { buffer, originalname, mimetype } = file;
+            const ext = path.extname(originalname);
+            const nameWithoutExt = path.basename(originalname, ext);
+            const fileId = Math.random();
+            const filename = `${fileId}-${nameWithoutExt}${ext}`;
+
+            let fileBuffer = buffer;
+            let contentType = mimetype;
+
+            // Compress if image
+            if (mimetype.startsWith("image/")) {
+                fileBuffer = await sharp(buffer)
+                    .resize({ width: 1024 })
+                    .jpeg({ quality: 70 })
+                    .toBuffer();
+                contentType = "image/jpeg";
+            }
+
+            const uploadUrl = `${SUPABASE_URL}/storage/v1/object/${BUCKET_NAME}/${filename}`;
+
+            const response = await axios.put(uploadUrl, fileBuffer, {
+                headers: {
+                    Authorization: `Bearer ${SUPABASE_API_KEY}`,
+                    "Content-Type": contentType,
+                    "x-upsert": "true",
+                },
+            });
+
+            if (response.status !== 200) {
+                throw new Error(`Failed to upload: ${originalname}`);
+            }
+
+            const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${BUCKET_NAME}/${filename}`;
+            uploadedUrls.push({ name: originalname, url: publicUrl });
+        }
+
+        res.json({ success: true, files: uploadedUrls });
+    } catch (error) {
+        console.error("Upload error:", error.message);
+        res.status(500).json({ error: "Upload failed" });
+    }
+});
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Example app listening on port ${port}`);
