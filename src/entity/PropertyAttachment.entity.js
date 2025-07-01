@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false,
       field: "propertyattach_is_primary",
     },
+    order: { // To set one image as the main display image
+      type: DataTypes.INTEGER,
+      field: "propertyattach_order",
+    },
     caption: {
       type: DataTypes.STRING(255),
       field: "propertyattach_caption",
