@@ -71,6 +71,16 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       field: "pg_name",
     },
+    isVerified: { // By platform
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      field: "pg_is_verified",
+    },
+    hasVirtualTour: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+      field: "pg_has_virtual_tour",
+    },
     //ADDRESS ---
 
     mapReferenceId: {
