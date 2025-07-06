@@ -33,8 +33,6 @@ module.exports = (sequelize, DataTypes) => {
       field: "projectattach_type",
       defaultValue:null
     },
-
-
     projectId: {
       type: DataTypes.INTEGER,
       field: "projectattach_project_id",

@@ -6,6 +6,8 @@ const jwt = require("jsonwebtoken");
 const crypto = require('crypto');
 const {toJSON} = require("lodash/seq");
 const AcademyService = require("./AcademyService.service");
+
+
 async function saveProperty(req) {
     const {
         id,
@@ -186,6 +188,93 @@ async function saveProperty(req) {
     return property;
 }
 
+
+
+
+async function savePropertyAttachment(propertyAttachmentList, propertyId) {
+    try {
+        for (const attachment of propertyAttachmentList) {
+            if (attachment._deleted && attachment.id) {
+                // DELETE
+                await db.PropertyAttachment.destroy({
+                    where: { id: attachment.id },
+                });
+            } else if (attachment.id) {
+                // UPDATE
+                await db.PropertyAttachment.update(
+                    {
+                        url: attachment.url,
+                        caption: attachment.caption,
+                        isPrimary: attachment.isPrimary,
+                        order: attachment.order,
+                        type: attachment.type,
+                    },
+                    {
+                        where: { id: attachment.id },
+                    }
+                );
+            } else {
+                // CREATE
+                await db.PropertyAttachment.create({
+                    url: attachment.url,
+                    caption: attachment.caption || null,
+                    isPrimary: attachment.isPrimary || false,
+                    order: attachment.order || 0,
+                    type: attachment.type || 'IMAGE',
+                    propertyId: propertyId,
+                });
+            }
+        }
+        return { success: true };
+    } catch (error) {
+        console.error('Error saving property attachments:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+
+
+async function saveProjectAttachment(projectAttachmentList, projectId) {
+    try {
+        for (const attachment of projectAttachmentList) {
+            if (attachment._deleted && attachment.id) {
+                // DELETE
+                await db.ProjectAttachment.destroy({
+                    where: { id: attachment.id },
+                });
+            } else if (attachment.id) {
+                // UPDATE
+                await db.ProjectAttachment.update(
+                    {
+                        url: attachment.url,
+                        caption: attachment.caption,
+                        isPrimary: attachment.isPrimary,
+                        order: attachment.order,
+                        type: attachment.type,
+                    },
+                    {
+                        where: { id: attachment.id },
+                    }
+                );
+            } else {
+                // CREATE
+                await db.ProjectAttachment.create({
+                    url: attachment.url,
+                    caption: attachment.caption || null,
+                    isPrimary: attachment.isPrimary || false,
+                    order: attachment.order || 0,
+                    type: attachment.type || 'IMAGE',
+                    projectId: attachment.projectId,
+                });
+            }
+        }
+        return { success: true };
+    } catch (error) {
+        console.error('Error saving property attachments:', error);
+        return { success: false, error: error.message };
+    }
+}
+
 async function saveProject(req) {
 
     console.log(req.body)
@@ -328,6 +417,7 @@ async function saveDeveloper(req) {
         email,
         contactNumber,
         description,
+        avatar
     } = req.body;
 
     let res;
@@ -340,6 +430,7 @@ async function saveDeveloper(req) {
             email,
             contactNumber,
             description,
+            avatar,
             userId: req.user.userId,
         });
     } else {
@@ -348,6 +439,7 @@ async function saveDeveloper(req) {
             website :website,
             email : email,
             contactNumber,
+            avatar,
             description,
         })
         res = await db.Developer.create({
@@ -356,6 +448,7 @@ async function saveDeveloper(req) {
             email,
             contactNumber,
             description,
+            avatar,
             userId: req.user.userId,
         })
     }
@@ -367,5 +460,7 @@ module.exports = {
     saveProperty,
     saveProject,
     saveDeveloper,
+    savePropertyAttachment,
+    saveProjectAttachment
 };
 

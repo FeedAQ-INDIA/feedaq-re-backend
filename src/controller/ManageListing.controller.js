@@ -23,6 +23,44 @@ async function saveProperty(req, res, next) {
     }
 }
 
+
+async function savePropertyAttachment(req, res, next) {
+    const {propertyAttachmentList, propertyId} = req.body;
+    try {
+        let val = await ListingService.savePropertyAttachment(propertyAttachmentList, propertyId);
+        res.status(200).send({
+            status: 200, message: "Success", data: val != null ? val : [],
+        });
+    } catch (err) {
+        console.error(`Error occured`, err.message);
+        console.error("❌ Sequelize validation error:", err.errors || err);
+        res.status(500).send({
+            status: 500, message: err.message || "Some error occurred while creating the Tutorial.",
+        });
+        next(err);
+    }
+}
+
+
+
+async function saveProjectAttachment(req, res, next) {
+    const {projectAttachmentList, projectId} = req.body;
+    try {
+        let val = await ListingService.saveProjectAttachment(projectAttachmentList, projectId);
+        res.status(200).send({
+            status: 200, message: "Success", data: val != null ? val : [],
+        });
+    } catch (err) {
+        console.error(`Error occured`, err.message);
+        console.error("❌ Sequelize validation error:", err.errors || err);
+        res.status(500).send({
+            status: 500, message: err.message || "Some error occurred while creating the Tutorial.",
+        });
+        next(err);
+    }
+}
+
+
 async function saveProject(req, res, next) {
     const {} = req.body;
     try {
@@ -635,6 +673,8 @@ module.exports = {
     saveDeveloper,
     saveProject,
     saveProperty,
+    savePropertyAttachment,
+    saveProjectAttachment,
     getProjectFeatures,
     getProjectConfiguration,
     getPropertyFeatures,

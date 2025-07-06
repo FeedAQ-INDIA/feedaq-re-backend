@@ -39,7 +39,9 @@ router.get("/searchPG", userIdExtracter,   pgSearchController.searchPG);
 
 
 router.post("/saveProperty", authMiddleware,   listingController.saveProperty);
+router.post("/savePropertyAttachment", authMiddleware,   listingController.savePropertyAttachment);
 router.post("/saveProject", authMiddleware,   listingController.saveProject);
+router.post("/saveProjectAttachment", authMiddleware,   listingController.saveProjectAttachment);
 router.post("/saveDeveloper", authMiddleware,   listingController.saveDeveloper);
 
 router.get("/getProjectFeatures",   listingController.getProjectFeatures);

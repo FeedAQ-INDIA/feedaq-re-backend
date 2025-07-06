@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         key: "user_id",
       },
     },
+    avatar: {
+      type: DataTypes.STRING,
+      field: "developer_avatar",
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
