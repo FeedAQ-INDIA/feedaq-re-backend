@@ -124,6 +124,7 @@ async function saveUserFav(req, res, next) {
 
 async function registerAgent(req, res, next) {
     const {
+        avatar,
         agentBio,
         agentPhoneNumber,
         agentEmail,
@@ -143,6 +144,7 @@ async function registerAgent(req, res, next) {
     } = req.body;
     try {
         let val = await AcademyService.registerAgent(req.user.userId,
+            avatar,
             agentBio,
             agentPhoneNumber,
             agentEmail,

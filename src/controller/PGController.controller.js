@@ -45,11 +45,11 @@ async function savePGRoom(req, res, next) {
 
 
 async function savePGAttachment(req, res, next) {
-    const {} = req.body;
+    const {pgAttachmentList} = req.body;
     console.log("Request body:", req.body);
 
     try {
-        let val = await PGListingService.savePGAttachment(req);
+        let val = await PGListingService.savePGAttachment(pgAttachmentList);
         res.status(200).send({
             status: 200, message: "Success", data: val != null ? val : [],
         });

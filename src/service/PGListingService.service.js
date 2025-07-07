@@ -100,59 +100,49 @@ async function savePG(req) {
 
 
 
-async function savePGAttachment(req) {
-    const data = req.body;
+async function savePGAttachment(pgAttachmentList) {
 
-    try {
-        const {
-            id, // pgattach_id
-            url,
-            isPrimary,
-            caption,
-            type,
-            pgId,
-            pgRoomId
-        } = data;
-
-        const attachmentPayload = {
-            url,
-            isPrimary,
-            caption,
-            type,
-            pgId,
-            pgRoomId,
-        };
-
-        let result;
-
-        if (id) {
-            // UPDATE existing record
-            const [updatedCount] = await db.PGAttachment.update(attachmentPayload, {
-                where: { id },
-            });
-
-            if (updatedCount === 0) {
-                throw new Error('Attachment not found or no changes made.');
+         try {
+            for (const attachment of pgAttachmentList) {
+                if (attachment._deleted && attachment.id) {
+                    // DELETE
+                    await db.PGAttachment.destroy({
+                        where: { id: attachment.id },
+                    });
+                } else if (attachment.id) {
+                    // UPDATE
+                    await db.PGAttachment.update(
+                        {
+                            url: attachment.url,
+                            caption: attachment.caption,
+                            isPrimary: attachment.isPrimary,
+                            order: attachment.order,
+                            type: attachment.type,
+                        },
+                        {
+                            where: { id: attachment.id },
+                        }
+                    );
+                } else {
+                    // CREATE
+                    await db.PGAttachment.create({
+                        url: attachment.url,
+                        caption: attachment.caption || null,
+                        isPrimary: attachment.isPrimary || false,
+                        order: attachment.order || 0,
+                        type: attachment.type || 'IMAGE',
+                        pgId: attachment.pgId,
+                        pgRoomId:attachment.pgRoomId
+                    });
+                }
             }
-
-            result = await db.PGAttachment.findByPk(id); // Return updated data
-        } else {
-            // CREATE new record
-            result = await db.PGAttachment.create(attachmentPayload);
+            return { success: true };
+        } catch (error) {
+            console.error('Error saving property attachments:', error);
+            return { success: false, error: error.message };
         }
 
-        return {
-            success: true,
-            message: id ? 'Attachment updated successfully' : 'Attachment created successfully',
-            data: result,
-        };
-    } catch (error) {
-        console.error('Error in saveOrEditPGAttachment:', error);
-        return {
-            success: false,
-            message: error.message || 'Failed to save attachment',
-        };
-    }
+
 }
 
 async function savePGFeature(req) {

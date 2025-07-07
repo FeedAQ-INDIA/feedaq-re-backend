@@ -140,6 +140,7 @@ const getInitials = (name) => {
 
 const registerAgent = async (
     userId,
+    avatar,
     agentBio,
     agentPhoneNumber,
     agentEmail,
@@ -165,6 +166,7 @@ const registerAgent = async (
         },
         defaults:{
             userId,
+            avatar,
             agentBio,
             agentPhoneNumber,
             agentEmail,

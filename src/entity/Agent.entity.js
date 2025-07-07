@@ -16,6 +16,10 @@ module.exports = (sequelize, Sequelize) => {
                     key: "user_id",
                 },
             },
+            avatar:{
+                type: Sequelize.STRING,
+                field: "agent_avatar",
+            },
             agentBio: {
                 type: Sequelize.TEXT,
                 field: "agent_bio",
