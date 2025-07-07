@@ -1,46 +1,41 @@
-const { literal } = require('sequelize');
+const { literal, fn, col, where } = require('sequelize');
 const db = require("../entity/index.js");
 
 exports.searchProjects = async (req, res) => {
     try {
-        const { lat, lng, radius, page = 1, limit = 10 } = req.query;
+        const { lat, lng, radius = "5", page = "1", limit = "10" } = req.query;
 
         const parsedLat = parseFloat(lat);
         const parsedLng = parseFloat(lng);
-        const parsedRadius = parseFloat(radius) * 1000;
+        const parsedRadius = parseFloat(radius) * 1000; // meters
         const parsedPage = parseInt(page);
         const parsedLimit = parseInt(limit);
         const offset = (parsedPage - 1) * parsedLimit;
 
-        // Spatial where clause using raw SQL inside Sequelize's literal
-        const whereGeo = literal(`
-            ST_DWithin(
-                project_geoam,
-                ST_SetSRID(ST_MakePoint(${parsedLng}, ${parsedLat}), 4326),
-                ${parsedRadius}
-            )
-        `);
+        if (isNaN(parsedLat) || isNaN(parsedLng) || isNaN(parsedRadius)) {
+            return res.status(400).json({ error: "Invalid latitude, longitude, or radius" });
+        }
 
-        // Fetch paginated project results mapped to Sequelize model
+        const whereGeo = where(
+            fn('ST_DWithin',
+                col('project_geoam'),
+                fn('ST_SetSRID', fn('ST_MakePoint', parsedLng, parsedLat), 4326),
+                parsedRadius
+            ),
+            true
+        );
+
         const result = await db.Project.findAndCountAll({
             where: whereGeo,
-            include:[
-                {
-                    model: db.ProjectAttachment,
-                    as: "attachment",
-                },
-                {
-                    model: db.ProjectFeature,
-                    as: "features",
-                },
-                {
-                    model: db.ProjectConfiguration,
-                    as: "configurations",
-                },
-
+            include: [
+                { model: db.ProjectAttachment, as: "attachment" },
+                { model: db.ProjectFeature, as: "features" },
+                { model: db.ProjectConfiguration, as: "configurations" },
             ],
             limit: parsedLimit,
             offset,
+            distinct: true, // ✅ fixes the overcount issue
+
         });
 
         const total = result.count;
@@ -50,7 +45,7 @@ exports.searchProjects = async (req, res) => {
             total,
             currentPage: parsedPage,
             totalPages,
-            data: result.rows // Array of Sequelize Project instances
+            data: result.rows
         });
 
     } catch (err) {

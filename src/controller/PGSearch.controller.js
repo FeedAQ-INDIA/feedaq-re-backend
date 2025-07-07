@@ -41,6 +41,8 @@ exports.searchPG = async (req, res) => {
             ],
             limit: parsedLimit,
             offset,
+            distinct: true, // ✅ fixes the overcount issue
+
         });
 
         const total = result.count;
