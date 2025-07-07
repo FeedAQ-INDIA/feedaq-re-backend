@@ -148,15 +148,18 @@ const registerAgent = async (
     agentExperience,
     agentAgencyName,
     agentWebsite,
-    agentOfficeAddress,
-    agentCity,
-    agentState,
-    agentCountry,
+
     agentAreasServed,
     agentSpecializations,
     agentLanguagesSpoken,
     latitude,
-    longitude
+    longitude,
+    addressLine1,
+    addressLine2,
+    locality,
+    city,
+    state,
+    country,
 ) => {
 
 
@@ -174,15 +177,18 @@ const registerAgent = async (
             agentExperience,
             agentAgencyName,
             agentWebsite,
-            agentOfficeAddress,
-            agentCity,
-            agentState,
-            agentCountry,
+
             agentAreasServed,
             agentSpecializations,
             agentLanguagesSpoken,
             latitude,
             longitude,
+            addressLine1,
+            addressLine2,
+            locality,
+            city,
+            state,
+            country,
             agentNameInitial: getInitials(agentAgencyName)
         }
     })

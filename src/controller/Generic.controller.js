@@ -132,15 +132,18 @@ async function registerAgent(req, res, next) {
         agentExperience,
         agentAgencyName,
         agentWebsite,
-        agentOfficeAddress,
-        agentCity,
-        agentState,
-        agentCountry,
+
         agentAreasServed,
         agentSpecializations,
         agentLanguagesSpoken,
         latitude,
-        longitude
+        longitude,
+        addressLine1,
+        addressLine2,
+        locality,
+        city,
+        state,
+        country,
     } = req.body;
     try {
         let val = await AcademyService.registerAgent(req.user.userId,
@@ -152,15 +155,18 @@ async function registerAgent(req, res, next) {
             agentExperience,
             agentAgencyName,
             agentWebsite,
-            agentOfficeAddress,
-            agentCity,
-            agentState,
-            agentCountry,
+
             agentAreasServed,
             agentSpecializations,
             agentLanguagesSpoken,
             latitude,
-            longitude);
+            longitude,
+            addressLine1,
+            addressLine2,
+            locality,
+            city,
+            state,
+            country,);
         res.status(200).send({
             status: 200, message: "Success", data: val != null ? val : [],
         });

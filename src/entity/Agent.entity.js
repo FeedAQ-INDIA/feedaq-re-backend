@@ -72,29 +72,6 @@ module.exports = (sequelize, Sequelize) => {
                 field: "agent_website",
             },
 
-            agentOfficeAddress: {
-                type: Sequelize.STRING(200),
-                field: "agent_office_address",
-            },
-            agentLocality: {
-                type: Sequelize.STRING(100),
-                field: "agent_locality",
-            },
-            agentCity: {
-                type: Sequelize.STRING(100),
-                field: "agent_city",
-            },
-
-            agentState: {
-                type: Sequelize.STRING(100),
-                field: "agent_state",
-            },
-
-            agentCountry: {
-                type: Sequelize.STRING(100),
-                field: "agent_country",
-            },
-
             agentAreasServed: {
                 type: Sequelize.ARRAY(Sequelize.STRING(50)), // Use TEXT or JSON depending on DB
                 field: "agent_areas_served",
