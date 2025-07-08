@@ -23,6 +23,22 @@ module.exports = (sequelize, DataTypes) => {
                 key: "project_id",
             },
         },
+        consultantId: {
+            type: DataTypes.INTEGER,
+            field: "usersearchtrack_agent_id",
+            references: {
+                model: "agent",
+                key: "agent_id",
+            },
+        },
+        pgId: {
+            type: DataTypes.INTEGER,
+            field: "usersearchtrack_pg_id",
+            references: {
+                model: "pg",
+                key: "pg_id",
+            },
+        },
         userId: {
             type: DataTypes.INTEGER,
             field: "usersearchtrack_user_id",

@@ -99,6 +99,14 @@ db.UserSearchTrack.belongsTo(db.Project, {
     foreignKey: 'projectId',
     as: 'project',
 });
+db.UserSearchTrack.belongsTo(db.Agent, {
+    foreignKey: 'consultantId',
+    as: 'consultant',
+});
+db.UserSearchTrack.belongsTo(db.PG, {
+    foreignKey: 'pgId',
+    as: 'pg',
+});
 db.UserSearchTrack.belongsTo(db.Developer, {
     foreignKey: 'developerId',
     as: 'developer',
